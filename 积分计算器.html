@@ -1,39 +1,39 @@
-<!DOCTYPE html>
-<html>
-<head>
+
+<超文本标记语言>
+<头>
     <title>积分计算器（新增）</title>
-    <style>
-        body { 
-            font-family: 微软雅黑, sans-serif; 
-            background: #f0f4f7;
-            margin: 20px;
+    <样式>
+        身体 { 
+            字体：微软雅黑，无衬线；
+            背景: #f0f4f7;
+            边距：20像素;
         }
-        .container {
-            width: 360px;
-            margin: 0 auto;
-            padding: 25px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        .容器 {
+            宽度：360像素;
+            边距：0 自动;
+            
+            背景：白色;
+            边框半径：8像素;
+            box-shadow：0 2px 8px rgba(0,0,0,0.1);
         }
-        h2 {
-            color: #2a5c9d;
-            text-align: center;
-            margin-bottom: 20px;
+        h2  {
+            颜色: #2a5c9d;
+            文本对齐：居中;
+            下边距：20像素;
         }
-        .form-group {
-            margin-bottom: 15px;
+        .表单组 {
+            下边距：15像素;
         }
-        label {
-            display: block;
-            color: #333;
-            margin-bottom: 5px;
+        标签 {
+            显示：块级元素;
+            颜色: #333;
+            下边距：5像素;
         }
-        select, .checkbox-group, input[type="number"] {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+        选择，。复选框组，输入[类型="数字"] {
+            宽度：100%;
+            
+            边框：1像素 实线#ccc;
+            边框半径：4像素;
             margin-bottom: 5px;
         }
         .checkbox-group label {
@@ -82,7 +82,6 @@
                 <option value="79">全家福79元</option>
                 <option value="59">流量王59元</option>
                 <option value="39">流量王39元</option>
-                <option value="6">副卡</option>
             </select>
         </div>
 
@@ -173,13 +172,12 @@
             '79': { base: 79, value: 0.8 },
             '59': { base: 59, value: 0.5 },
             '39': { base: 39, value: 0.5 },
-            '6': { base: 6, value: 0.5 }
         };
 
         function calculate() {
             // 获取参数
             const package = document.getElementById('package').value;
-            const discount = parseFloat(document.getElementById('discount').value) || 1.0;
+            const discount = parseFloat(document.getElementById('discount').value) || 0.0;
             const userType = parseFloat(document.getElementById('userType').value);
             const baoHao = parseFloat(document.getElementById('baoHao').value);
             const channel = parseFloat(document.getElementById('channel').value);
@@ -229,7 +227,7 @@
             // 显示结果
             document.getElementById('result').innerHTML = `
                 <strong>基础积分构成：</strong><br>
-                套餐基数：${base+1-discount} ×<br>
+                套餐基数：${base-discount} ×<br>
                 用户系数：${userType} ×<br>
                 价值体系：${value} + ${fusion} = ${(value+fusion).toFixed(1)} ×<br>
                 包保系数：${baoHao} ×<br>
