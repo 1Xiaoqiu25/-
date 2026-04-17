@@ -72,9 +72,11 @@
             <select id="package">
                 <option value="389">全家福389元</option>
                 <option value="359">全家福359元</option>
+                <option value="299">全家福299元</option>
                 <option value="289">全家福289元</option>
                 <option value="259">全家福259元</option>
                 <option value="239">全家福239元</option>
+                <option value="209">全家福209元</option>
                 <option value="199">全家福199元</option>
                 <option value="169">全家福169元</option>
                 <option value="139">全家福139元</option>
@@ -83,12 +85,6 @@
                 <option value="59">流量王59元</option>
                 <option value="39">流量王39元</option>
             </select>
-        </div>
-
-        <!-- 套餐优惠金额 -->
-        <div class="form-group">
-            <label>套餐优惠金额</label>
-            <input type="number" id="discount" step="0" min="0" max="100" value="1.00">
         </div>
 
         <!-- 用户类型 -->
@@ -105,19 +101,17 @@
             <label>融合选项：</label>
             <div class="checkbox-group">
                 <label><input type="checkbox" name="fusion" value="-0.2"> 单卡</label>
-                <label><input type="checkbox" name="fusion" value="0.1"> 移移融合</label>
-                <label><input type="checkbox" name="fusion" value="0.2"> 云智同装</label>
-                <label><input type="checkbox" name="fusion" value="0.3" id="yikuan"> 移宽融合</label>
-                <label><input type="checkbox" name="fusion" value="0.7" id="fttr"> FTTR同装</label>
-                <label><input type="checkbox" name="fusion" value="0.1"> 1年及以下合约</label>
-                <label><input type="checkbox" name="fusion" value="0.4"> 2年期合约</label>
-                <label><input type="checkbox" name="fusion" value="0.6"> 3年期合约</label>
+                <label><input type="checkbox" name="fusion" value="0.2"> 移移融合</label>
+                <label><input type="checkbox" name="fusion" value="0.5" id="yikuan"> 融合1宽</label>
+                <label><input type="checkbox" name="fusion" value="0.5" id="yikuan"> 融合2宽</label>
+                <label><input type="checkbox" name="fusion" value="0.7" id="fttr"> FTTR/云智同装</label>
+                <label><input type="checkbox" name="fusion" value="0.6"> 终端合约系数</label>
             </div>
         </div>
 
-        <!-- 包保用户 -->
+        <!-- 名单制用户 -->
         <div class="form-group">
-            <label>包保用户：</label>
+            <label>名单制用户：</label>
             <select id="baoHao">
                 <option value="1.2">是</option>
                 <option value="1.0">否</option>
@@ -160,16 +154,18 @@
 
     <script>
         const packageRules = {
-            '389': { base: 389, value: 2.0 },
-            '359': { base: 359, value: 2.0 },
-            '289': { base: 289, value: 2.0 },
-            '259': { base: 259, value: 2.0 },
-            '239': { base: 239, value: 2.0 },
-            '199': { base: 199, value: 2.0 },
-            '169': { base: 169, value: 2.0 },
-            '139': { base: 139, value: 1.8 },
+            '389': { base: 389, value: 1.8 },
+            '359': { base: 359, value: 1.8 },
+            '299': { base: 299, value: 1.8 },
+            '289': { base: 289, value: 1.8 },
+            '259': { base: 259, value: 1.8 },
+            '239': { base: 239, value: 1.8 },
+            '209': { base: 209, value: 1.8 },
+            '199': { base: 199, value: 1.8 },
+            '169': { base: 169, value: 1.8 },
+            '139': { base: 139, value: 1.5 },
             '99': { base: 99, value: 1.3 },
-            '79': { base: 79, value: 0.8 },
+            '79': { base: 79, value: 1.0 },
             '59': { base: 59, value: 0.5 },
             '39': { base: 39, value: 0.5 },
         };
@@ -177,7 +173,6 @@
         function calculate() {
             // 获取参数
             const package = document.getElementById('package').value;
-            const discount = parseFloat(document.getElementById('discount').value) || 0.0;
             const userType = parseFloat(document.getElementById('userType').value);
             const baoHao = parseFloat(document.getElementById('baoHao').value);
             const channel = parseFloat(document.getElementById('channel').value);
@@ -200,7 +195,7 @@
             const value = packageRules[package].value;
 
             // 计算基础积分
-            let total =(base+1-discount) * userType * (value + fusion) * baoHao * channel * holiday;
+            let total =base* userType * (value + fusion) * baoHao * channel * holiday;
 
             // 安调费计算
             let adjustmentFee = 0;
@@ -227,13 +222,13 @@
             // 显示结果
             document.getElementById('result').innerHTML = `
                 <strong>基础积分构成：</strong><br>
-                套餐基数：${base-discount} ×<br>
+                套餐基数：${base} ×<br>
                 用户系数：${userType} ×<br>
                 价值体系：${value} + ${fusion} = ${(value+fusion).toFixed(1)} ×<br>
-                包保系数：${baoHao} ×<br>
+                名单制系数：${baoHao} ×<br>
                 渠道系数：${channel} ×<br>
                 节日系数：${holiday} ×<br>
-                星级系数：${starFactor.toFixed(1)}<br>
+                作业贡献系数：${starFactor.toFixed(1)}<br>
                 ${feeRule ? `<hr><strong>安调费规则：</strong><br>${feeRule}` : ''}
                 <hr>
                 <strong>最终积分：${totalPoints}分</strong><br>
